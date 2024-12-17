@@ -1,6 +1,10 @@
 import { useParams, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-import { fetchArticleById, fetchCommentsByArticleId } from "../api";
+import {
+  fetchArticleById,
+  fetchCommentsByArticleId,
+  updateArticleVotes,
+} from "../api";
 import { CommentCard } from "../components/CommentCard";
 
 export const ArticleDetails = () => {
@@ -10,6 +14,7 @@ export const ArticleDetails = () => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [voteChange, setVoteChange] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -32,6 +37,14 @@ export const ArticleDetails = () => {
       });
   }, [articleId]);
 
+  const handleVote = (updateVoteBy) => {
+    setVoteChange((currVotes) => currVotes + updateVoteBy);
+
+    updateArticleVotes(articleId, updateVoteBy).catch(() => {
+      setVoteChange((currVotes) => currVotes - updateVoteBy);
+    });
+  };
+
   if (loading) return <div>Loading article...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -51,13 +64,18 @@ export const ArticleDetails = () => {
         {new Date(article.created_at).toLocaleDateString()}
       </p>
       <p>
-        <strong>Votes:</strong> {article.votes}
+        <strong>Votes:</strong> {article.votes + voteChange}
+        <button onClick={() => handleVote(1)} className="vote-button">
+          👍
+        </button>
+        <button onClick={() => handleVote(-1)} className="vote-button">
+          👎
+        </button>
       </p>
       <p>
         <strong>Comments:</strong> {article.comment_count}
       </p>
 
-      {/* Comments Section */}
       <section className="comments-section">
         <h2>Comments</h2>
         {comments.length === 0 ? (
