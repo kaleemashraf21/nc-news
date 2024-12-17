@@ -143,6 +143,19 @@
   background: #0055a4;
 }
 
+.vote-button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #f9f9f9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.vote-button:hover {
+  background-color: lightgrey;
+}
+
 /* Comments Section */
 .comments-section {
   margin-top: 40px;
@@ -172,7 +185,7 @@
   margin: 5px 0;
 }
 
-.comment-meta {
+.comment-data {
   font-size: 0.9rem;
   color: #555;
 }
