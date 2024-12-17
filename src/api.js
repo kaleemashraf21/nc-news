@@ -13,3 +13,13 @@ export const fetchAllArticles = () => {
       return err;
     });
 };
+
+export const fetchArticleById = (articleId) => {
+  return api
+    .get(`/articles/${articleId}`)
+    .then(({ data }) => data.article)
+    .catch((err) => {
+      console.log(err);
+      return err;
+    });
+};

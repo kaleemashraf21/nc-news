@@ -101,3 +101,44 @@
 .view-article-link:hover {
   text-decoration: underline;
 }
+
+/* Article Details Styles */
+.article-details {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.article-details img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.article-details h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.article-details p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.article-details .back-button {
+  background: #0066cc;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.article-details .back-button:hover {
+  background: #0055a4;
+}
