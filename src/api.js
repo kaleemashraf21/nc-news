@@ -23,3 +23,13 @@ export const fetchArticleById = (articleId) => {
       return err;
     });
 };
+
+export const fetchCommentsByArticleId = (articleId) => {
+  return api
+    .get(`/articles/${articleId}/comments`)
+    .then(({ data }) => data.comments)
+    .catch((err) => {
+      console.log(err);
+      return err;
+    });
+};

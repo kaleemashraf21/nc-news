@@ -1,11 +1,13 @@
 import { useParams, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-import { fetchArticleById } from "../api";
+import { fetchArticleById, fetchCommentsByArticleId } from "../api";
+import { CommentCard } from "../components/CommentCard";
 
 export const ArticleDetails = () => {
   const { articleId } = useParams();
   const navigate = useNavigate();
   const [article, setArticle] = useState(null);
+  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -13,13 +15,19 @@ export const ArticleDetails = () => {
     setLoading(true);
     setError(null);
 
-    fetchArticleById(articleId)
-      .then((articleData) => {
+    Promise.all([
+      fetchArticleById(articleId),
+      fetchCommentsByArticleId(articleId),
+    ])
+      .then(([articleData, commentsData]) => {
         setArticle(articleData);
+        setComments(commentsData);
         setLoading(false);
       })
       .catch(() => {
-        setError("Something went wrong while fetching the article.");
+        setError(
+          "Something went wrong while fetching the article or comments."
+        );
         setLoading(false);
       });
   }, [articleId]);
@@ -48,6 +56,20 @@ export const ArticleDetails = () => {
       <p>
         <strong>Comments:</strong> {article.comment_count}
       </p>
+
+      {/* Comments Section */}
+      <section className="comments-section">
+        <h2>Comments</h2>
+        {comments.length === 0 ? (
+          <p>No comments yet. Be the first to comment!</p>
+        ) : (
+          <ul className="comments-list">
+            {comments.map((comment) => (
+              <CommentCard key={comment.comment_id} comment={comment} />
+            ))}
+          </ul>
+        )}
+      </section>
     </article>
   );
 };
