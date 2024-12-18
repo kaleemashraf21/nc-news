@@ -1,14 +1,24 @@
-export const CommentCard = ({ comment }) => {
+export const CommentCard = ({ comment, onDelete, currentUser }) => {
+  const handleDeleteClick = () => {
+    if (comment.author === currentUser) {
+      onDelete(comment.comment_id);
+    }
+  };
+
   return (
     <li className="comment-card">
-      <p>
-        <strong>{comment.author}</strong>:
-      </p>
       <p>{comment.body}</p>
-      <p className="comment-data">
-        Votes: {comment.votes} | Posted on:{" "}
-        {new Date(comment.created_at).toLocaleString()}
+      <p>
+        <strong>Posted by:</strong> {comment.author}
       </p>
+      <p>
+        <small>{new Date(comment.created_at).toLocaleDateString()}</small>
+      </p>
+      {comment.author === currentUser && (
+        <button onClick={handleDeleteClick} className="delete-comment-button">
+          Delete
+        </button>
+      )}
     </li>
   );
 };
