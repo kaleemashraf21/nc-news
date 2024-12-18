@@ -4,17 +4,21 @@ import {
   fetchArticleById,
   fetchCommentsByArticleId,
   updateArticleVotes,
+  postComment,
 } from "../api";
 import { CommentCard } from "../components/CommentCard";
 
 export const ArticleDetails = () => {
   const { articleId } = useParams();
   const navigate = useNavigate();
+
   const [article, setArticle] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [voteError, setVoteError] = useState(null);
   const [voteChange, setVoteChange] = useState(0);
+  const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -30,23 +34,43 @@ export const ArticleDetails = () => {
         setLoading(false);
       })
       .catch(() => {
-        setError(
-          "Something went wrong while fetching the article or comments."
-        );
+        setError("Failed to load article or comments. Please try again.");
         setLoading(false);
       });
   }, [articleId]);
 
   const handleVote = (updateVoteBy) => {
-    setVoteChange((currVotes) => currVotes + updateVoteBy);
+    setVoteError(null);
+    setVoteChange((prevVoteChange) => prevVoteChange + updateVoteBy);
 
     updateArticleVotes(articleId, updateVoteBy).catch(() => {
-      setVoteChange((currVotes) => currVotes - updateVoteBy);
+      setVoteChange((prevVoteChange) => prevVoteChange - updateVoteBy);
+      setVoteError("Failed to update vote. Please check your connection.");
     });
   };
 
+  const handleCommentChange = (event) => {
+    setNewComment(event.target.value);
+  };
+
+  const handlePostComment = () => {
+    if (!newComment.trim()) return;
+
+    setIsPosting(true);
+    postComment(articleId, "tickle122", newComment)
+      .then((postedComment) => {
+        setComments((prevComments) => [postedComment, ...prevComments]);
+        setNewComment("");
+      })
+      .catch(() => {
+        setError("Failed to post the comment. Please try again.");
+        setIsPosting(false);
+      });
+  };
+
   if (loading) return <div>Loading article...</div>;
-  if (error) return <div>Error: {error}</div>;
+
+  if (error) return <div>{error}</div>;
 
   return (
     <article className="article-details">
@@ -72,12 +96,28 @@ export const ArticleDetails = () => {
           👎
         </button>
       </p>
+      {voteError && <p className="error-message">{voteError}</p>}
       <p>
-        <strong>Comments:</strong> {article.comment_count}
+        <strong>Comments:</strong> {comments.length}
       </p>
 
       <section className="comments-section">
         <h2>Comments</h2>
+        <div className="comment-input">
+          <label htmlFor="new-comment">Add a comment:</label>
+          <textarea
+            id="new-comment"
+            rows="3"
+            cols="50"
+            value={newComment}
+            onChange={handleCommentChange}
+            placeholder="Write a comment..."
+          />
+          <button onClick={handlePostComment} className="submit-comment-button">
+            Post Comment
+          </button>
+        </div>
+
         {comments.length === 0 ? (
           <p>No comments yet. Be the first to comment!</p>
         ) : (
