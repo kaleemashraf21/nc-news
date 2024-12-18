@@ -23,6 +23,8 @@ export const ArticleDetails = () => {
   const [voteChange, setVoteChange] = useState(0);
   const [newComment, setNewComment] = useState("");
   const [deletingCommentId, setDeletingCommentId] = useState(null);
+  const [isPosting, setIsPosting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -58,19 +60,25 @@ export const ArticleDetails = () => {
   };
 
   const handlePostComment = () => {
-    if (!newComment.trim()) return;
+    if (!newComment.trim() || isPosting) return;
+    setIsPosting(true);
 
     postComment(articleId, user, newComment)
       .then((postedComment) => {
         setComments((prevComments) => [postedComment, ...prevComments]);
         setNewComment("");
+        setIsPosting(false);
       })
       .catch(() => {
         setError("Failed to post the comment. Please try again.");
+        setIsPosting(false);
       });
   };
 
   const handleDeleteComment = (commentId) => {
+    if (isDeleting) return;
+    setIsDeleting(true);
+
     setDeletingCommentId(commentId);
 
     deleteComment(commentId)
@@ -78,10 +86,12 @@ export const ArticleDetails = () => {
         setComments((prevComments) =>
           prevComments.filter((comment) => comment.comment_id !== commentId)
         );
+        setIsDeleting(false);
       })
       .catch(() => {
         setError("Failed to delete comment. Please try again.");
         setDeletingCommentId(null);
+        setIsDeleting(false);
       });
   };
 
@@ -121,17 +131,23 @@ export const ArticleDetails = () => {
       <section className="comments-section">
         <h2>Comments</h2>
         <div className="comment-input">
-          <label htmlFor="new-comment">Add a comment:</label>
+          <label htmlFor="new-comment">
+            <strong>Add a comment:</strong>
+          </label>
           <textarea
             id="new-comment"
             rows="3"
             cols="50"
             value={newComment}
             onChange={handleCommentChange}
-            placeholder="Write a comment..."
+            placeholder=" Give your opinion..."
           />
-          <button onClick={handlePostComment} className="submit-comment-button">
-            Post Comment
+          <button
+            onClick={handlePostComment}
+            className="submit-comment-button"
+            disabled={isPosting}
+          >
+            {isPosting ? "Posting..." : "Post Comment"}
           </button>
         </div>
 
@@ -145,6 +161,7 @@ export const ArticleDetails = () => {
                 comment={comment}
                 onDelete={handleDeleteComment}
                 currentUser={user}
+                isDeleting={isDeleting}
               />
             ))}
           </ul>

@@ -1,4 +1,4 @@
-export const CommentCard = ({ comment, onDelete, currentUser }) => {
+export const CommentCard = ({ comment, onDelete, currentUser, isDeleting }) => {
   const handleDeleteClick = () => {
     if (comment.author === currentUser) {
       onDelete(comment.comment_id);
@@ -15,8 +15,12 @@ export const CommentCard = ({ comment, onDelete, currentUser }) => {
         <small>{new Date(comment.created_at).toLocaleDateString()}</small>
       </p>
       {comment.author === currentUser && (
-        <button onClick={handleDeleteClick} className="delete-comment-button">
-          Delete
+        <button
+          onClick={handleDeleteClick}
+          className="delete-comment-button"
+          disabled={isDeleting}
+        >
+          {isDeleting ? "Deleting..." : "Delete"}
         </button>
       )}
     </li>

@@ -6,7 +6,7 @@ export const Header = () => {
       <Link to="/">
         <h1>NC News</h1>
       </Link>
-      <nav>
+      <nav className="navbar">
         <Link to="/" className="navbar-link">
           Articles
         </Link>
