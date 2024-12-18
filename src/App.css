@@ -164,6 +164,16 @@
   background-color: lightgrey;
 }
 
+.vote-error {
+  color: white;
+  background-color: red;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
 /* Comments Section */
 .comments-section {
   margin-top: 40px;

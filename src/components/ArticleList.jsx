@@ -23,7 +23,7 @@ export const ArticleList = () => {
   }, []);
 
   if (loading) return <div>Loading articles...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div className="error-message">Error: {error}</div>;
 
   return (
     <section className="article-list">

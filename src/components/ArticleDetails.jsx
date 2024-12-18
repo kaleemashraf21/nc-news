@@ -19,7 +19,7 @@ export const ArticleDetails = () => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [voteError, setVoteError] = useState(null);
+  const [voteError, setVoteError] = useState(false);
   const [voteChange, setVoteChange] = useState(0);
   const [newComment, setNewComment] = useState("");
   const [deletingCommentId, setDeletingCommentId] = useState(null);
@@ -46,12 +46,12 @@ export const ArticleDetails = () => {
   }, [articleId]);
 
   const handleVote = (updateVoteBy) => {
-    setVoteError(null);
+    setVoteError(false);
     setVoteChange((prevVoteChange) => prevVoteChange + updateVoteBy);
 
     updateArticleVotes(articleId, updateVoteBy).catch(() => {
       setVoteChange((prevVoteChange) => prevVoteChange - updateVoteBy);
-      setVoteError("Failed to update vote. Please check your connection.");
+      setVoteError(true);
     });
   };
 
@@ -96,8 +96,7 @@ export const ArticleDetails = () => {
   };
 
   if (loading) return <div>Loading article...</div>;
-
-  if (error) return <div>{error}</div>;
+  if (error) return <div className="error-message">{error}</div>;
 
   return (
     <article className="article-details">
@@ -123,7 +122,11 @@ export const ArticleDetails = () => {
           👎
         </button>
       </p>
-      {voteError && <p className="error-message">{voteError}</p>}
+      {voteError ? (
+        <p className="vote-error">
+          Failed to update vote. Please check your connection
+        </p>
+      ) : null}
       <p>
         <strong>Comments:</strong> {comments.length}
       </p>
@@ -141,6 +144,7 @@ export const ArticleDetails = () => {
             value={newComment}
             onChange={handleCommentChange}
             placeholder=" Give your opinion..."
+            required
           />
           <button
             onClick={handlePostComment}
