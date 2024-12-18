@@ -5,12 +5,15 @@ import {
   fetchCommentsByArticleId,
   updateArticleVotes,
   postComment,
+  deleteComment,
 } from "../api";
 import { CommentCard } from "../components/CommentCard";
 
 export const ArticleDetails = () => {
   const { articleId } = useParams();
   const navigate = useNavigate();
+
+  const [user, setUser] = useState("tickle122");
 
   const [article, setArticle] = useState(null);
   const [comments, setComments] = useState([]);
@@ -19,6 +22,7 @@ export const ArticleDetails = () => {
   const [voteError, setVoteError] = useState(null);
   const [voteChange, setVoteChange] = useState(0);
   const [newComment, setNewComment] = useState("");
+  const [deletingCommentId, setDeletingCommentId] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -56,15 +60,28 @@ export const ArticleDetails = () => {
   const handlePostComment = () => {
     if (!newComment.trim()) return;
 
-    setIsPosting(true);
-    postComment(articleId, "tickle122", newComment)
+    postComment(articleId, user, newComment)
       .then((postedComment) => {
         setComments((prevComments) => [postedComment, ...prevComments]);
         setNewComment("");
       })
       .catch(() => {
         setError("Failed to post the comment. Please try again.");
-        setIsPosting(false);
+      });
+  };
+
+  const handleDeleteComment = (commentId) => {
+    setDeletingCommentId(commentId);
+
+    deleteComment(commentId)
+      .then(() => {
+        setComments((prevComments) =>
+          prevComments.filter((comment) => comment.comment_id !== commentId)
+        );
+      })
+      .catch(() => {
+        setError("Failed to delete comment. Please try again.");
+        setDeletingCommentId(null);
       });
   };
 
@@ -123,7 +140,12 @@ export const ArticleDetails = () => {
         ) : (
           <ul className="comments-list">
             {comments.map((comment) => (
-              <CommentCard key={comment.comment_id} comment={comment} />
+              <CommentCard
+                key={comment.comment_id}
+                comment={comment}
+                onDelete={handleDeleteComment}
+                currentUser={user}
+              />
             ))}
           </ul>
         )}
