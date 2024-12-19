@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { fetchAllArticles } from "../api";
 import { ArticleCard } from "./ArticleCard";
+import { useParams } from "react-router";
 
-export const ArticleList = () => {
+export const ArticlesList = () => {
+  const { topic } = useParams();
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +13,7 @@ export const ArticleList = () => {
     setLoading(true);
     setError(null);
 
-    fetchAllArticles()
+    fetchAllArticles(topic)
       .then((articlesData) => {
         setArticles(articlesData);
         setLoading(false);
@@ -20,7 +22,7 @@ export const ArticleList = () => {
         setError("Something went wrong while fetching articles.");
         setLoading(false);
       });
-  }, []);
+  }, [topic]);
 
   if (loading) return <div>Loading articles...</div>;
   if (error) return <div className="error-message">Error: {error}</div>;

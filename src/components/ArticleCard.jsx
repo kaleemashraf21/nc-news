@@ -10,7 +10,9 @@ export const ArticleCard = ({ article }) => {
       />
       <div className="article-content">
         <h3 className="article-title">
-          <Link to={`/articles/${article.article_id}`}>{article.title}</Link>
+          <Link to={`/articles-byId/${article.article_id}`}>
+            {article.title}
+          </Link>
         </h3>
         <p className="article-data">
           <span>By: {article.author}</span>
@@ -20,7 +22,7 @@ export const ArticleCard = ({ article }) => {
           </span>{" "}
         </p>
         <Link
-          to={`/articles/${article.article_id}`}
+          to={`/articles-byId/${article.article_id}`}
           className="view-article-link"
         >
           View Full Article
