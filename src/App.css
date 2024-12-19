@@ -265,3 +265,52 @@
 .delete-comment-button:hover {
   background-color: darkred;
 }
+
+/* Topic List Styles */
+.topic-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Topic Card Styles */
+.topic-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.topic-card:hover {
+  transform: translateY(-5px);
+  background-color: #f0f0f0;
+}
+
+.topic-card h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.view-topic-link {
+  font-size: 1rem;
+  color: #0066cc;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 1px solid #0066cc;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.view-topic-link:hover {
+  background-color: #0066cc;
+  color: white;
+  text-decoration: none;
+}

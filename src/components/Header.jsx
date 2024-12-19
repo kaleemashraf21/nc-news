@@ -10,6 +10,9 @@ export const Header = () => {
         <Link to="/" className="navbar-link">
           Articles
         </Link>
+        <Link to="/topics" className="navbar-link">
+          Topics
+        </Link>
       </nav>
     </header>
   );
