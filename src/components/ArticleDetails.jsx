@@ -105,7 +105,7 @@ export const ArticleDetails = () => {
 
   return (
     <article className="article-details">
-      <button onClick={() => navigate("/")} className="back-button">
+      <button onClick={() => navigate("/articles")} className="back-button">
         Back to Articles
       </button>
       <h1>{article.title}</h1>
