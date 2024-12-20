@@ -11,7 +11,6 @@ export const ArticlesList = () => {
   const [sortBy, setSortBy] = useState("created_at");
   const [order, setOrder] = useState("desc");
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(useSearchParams());
 
   useEffect(() => {
     setLoading(true);

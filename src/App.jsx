@@ -15,8 +15,8 @@ function App() {
       <Routes>
         <Route path="/" element={<ArticlesList />} />
         <Route path="/articles" element={<ArticlesList />} />
-        <Route path="/articles/:topic" element={<ArticlesList />} />
-        <Route path="/articles-byId/:articleId" element={<ArticleDetails />} />
+        <Route path="/topics/:topic" element={<ArticlesList />} />
+        <Route path="/articles/:articleId" element={<ArticleDetails />} />
         <Route path="/topics" element={<Topics />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
