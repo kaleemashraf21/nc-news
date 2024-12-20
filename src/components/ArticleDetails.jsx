@@ -8,6 +8,7 @@ import {
   deleteComment,
 } from "../api";
 import { CommentCard } from "../components/CommentCard";
+import { ErrorPage } from "./ErrorPage";
 
 export const ArticleDetails = () => {
   const { articleId } = useParams();
@@ -17,13 +18,18 @@ export const ArticleDetails = () => {
 
   const [article, setArticle] = useState(null);
   const [comments, setComments] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [voteError, setVoteError] = useState(false);
+
   const [voteChange, setVoteChange] = useState(0);
+  const [voteError, setVoteError] = useState(false);
+
   const [newComment, setNewComment] = useState("");
-  const [deletingCommentId, setDeletingCommentId] = useState(null);
   const [isPosting, setIsPosting] = useState(false);
+  const [commentError, setCommentError] = useState(false);
+
+  const [deletionError, setDeletionError] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
@@ -40,7 +46,7 @@ export const ArticleDetails = () => {
         setLoading(false);
       })
       .catch(() => {
-        setError("Failed to load article or comments. Please try again.");
+        setError("Article Not Found");
         setLoading(false);
       });
   }, [articleId]);
@@ -62,6 +68,7 @@ export const ArticleDetails = () => {
   const handlePostComment = () => {
     if (!newComment.trim() || isPosting) return;
     setIsPosting(true);
+    setCommentError(false);
 
     postComment(articleId, user, newComment)
       .then((postedComment) => {
@@ -70,7 +77,7 @@ export const ArticleDetails = () => {
         setIsPosting(false);
       })
       .catch(() => {
-        setError("Failed to post the comment. Please try again.");
+        setCommentError(true);
         setIsPosting(false);
       });
   };
@@ -78,8 +85,7 @@ export const ArticleDetails = () => {
   const handleDeleteComment = (commentId) => {
     if (isDeleting) return;
     setIsDeleting(true);
-
-    setDeletingCommentId(commentId);
+    setDeletionError(false);
 
     deleteComment(commentId)
       .then(() => {
@@ -89,14 +95,13 @@ export const ArticleDetails = () => {
         setIsDeleting(false);
       })
       .catch(() => {
-        setError("Failed to delete comment. Please try again.");
-        setDeletingCommentId(null);
+        setDeletionError(true);
         setIsDeleting(false);
       });
   };
 
   if (loading) return <div>Loading article...</div>;
-  if (error) return <div className="error-message">{error}</div>;
+  if (error) return <ErrorPage err={error} />;
 
   return (
     <article className="article-details">
@@ -122,11 +127,11 @@ export const ArticleDetails = () => {
           👎
         </button>
       </p>
-      {voteError ? (
-        <p className="vote-error">
-          Failed to update vote. Please check your connection
+      {voteError && (
+        <p className="connection-error">
+          Failed to update vote. Please check your connection.
         </p>
-      ) : null}
+      )}
       <p>
         <strong>Comments:</strong> {comments.length}
       </p>
@@ -143,7 +148,7 @@ export const ArticleDetails = () => {
             cols="50"
             value={newComment}
             onChange={handleCommentChange}
-            placeholder=" Give your opinion..."
+            placeholder="Give your opinion..."
             required
           />
           <button
@@ -154,6 +159,18 @@ export const ArticleDetails = () => {
             {isPosting ? "Posting..." : "Post Comment"}
           </button>
         </div>
+
+        {commentError && (
+          <p className="connection-error">
+            Failed to post comment. Please check your connection.
+          </p>
+        )}
+
+        {deletionError && (
+          <p className="connection-error">
+            Failed to delete comment. Please check your connection.
+          </p>
+        )}
 
         {comments.length === 0 ? (
           <p>No comments yet. Be the first to comment!</p>
