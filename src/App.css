@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-/* Header & Navbar Styles */
 .header {
   background-color: #333;
   color: #fff;
@@ -15,6 +14,7 @@
 .header a {
   color: #fff;
   font-size: 1.5rem;
+  font-family: "Permanent Marker", cursive;
   font-weight: bold;
   text-decoration: none;
 }
@@ -38,7 +38,6 @@
   background-color: #444;
 }
 
-/* Footer Styles */
 .footer {
   background-color: #333;
   color: #fff;
@@ -50,7 +49,6 @@
   width: 100%;
 }
 
-/* Dropdown Styles */
 .sort-controls {
   display: flex;
   justify-content: center;
@@ -61,7 +59,6 @@
   width: 100%;
 }
 
-/* Article List Styles */
 .article-list {
   margin-top: 20px;
   display: flex;
@@ -70,7 +67,6 @@
   justify-content: center;
 }
 
-/* Article Card Styles */
 .article-card {
   background: #fff;
   border: 1px solid #ddd;
@@ -121,7 +117,6 @@
   text-decoration: underline;
 }
 
-/* Article Details Styles */
 .article-details {
   background: #fff;
   padding: 20px;
@@ -175,7 +170,7 @@
   background-color: lightgrey;
 }
 
-.vote-error {
+.connection-error {
   color: white;
   background-color: red;
   padding: 10px;
@@ -185,7 +180,6 @@
   margin: 10px 0;
 }
 
-/* Comments Section */
 .comments-section {
   margin-top: 40px;
 }
@@ -277,7 +271,6 @@
   background-color: darkred;
 }
 
-/* Topic List Styles */
 .topic-list {
   display: flex;
   flex-wrap: wrap;
@@ -286,7 +279,6 @@
   padding: 20px;
 }
 
-/* Topic Card Styles */
 .topic-card {
   background-color: #fff;
   border: 1px solid #ddd;
@@ -323,5 +315,67 @@
 .view-topic-link:hover {
   background-color: #0066cc;
   color: white;
+  text-decoration: none;
+}
+
+.error-page-body {
+  height: 95vh;
+  background: #000000;
+  text-align: center;
+  color: #e0e0e0;
+  font-family: "Fira Mono", monospace;
+}
+.error-page-h1 {
+  font-size: 2.5rem;
+  font-family: "Permanent Marker", cursive;
+}
+.error-page-div {
+  transform-style: preserve-3d;
+}
+svg {
+  width: clamp(300px, 70%, 600px);
+  height: 500px;
+}
+#rocket {
+  transform: translateY(750px);
+
+  animation: launch 2s ease-out forwards;
+}
+
+@keyframes launch {
+  from {
+    transform: translateY(750px);
+  }
+  to {
+    perspective: 500px;
+    transform: translateY(0px);
+  }
+}
+#stars {
+  animation: twinkling 2s linear;
+}
+@keyframes twinkling {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.error-page-text {
+  opacity: 0;
+  animation: appear 1s ease-in forwards;
+  animation-delay: 1.8s;
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+a {
+  color: #f66947;
   text-decoration: none;
 }

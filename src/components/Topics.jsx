@@ -14,13 +14,13 @@ export const Topics = () => {
         setLoading(false);
       })
       .catch(() => {
-        setError("Failed to load topics");
+        setError("Failed To Load Topics");
         setLoading(false);
       });
   }, []);
 
   if (loading) return <p>Loading topics...</p>;
-  if (error) return <div className="error-message">Error: {error}</div>;
+  if (error) return <ErrorPage err={error} />;
 
   return (
     <section className="topic-list">

@@ -23,7 +23,7 @@ export const ArticlesList = () => {
         setLoading(false);
       })
       .catch(() => {
-        setError("Something went wrong while fetching articles.");
+        setError("Failed To Load Articles.");
         setLoading(false);
       });
   }, [topic, searchParams]);
@@ -41,7 +41,7 @@ export const ArticlesList = () => {
   };
 
   if (loading) return <div>Loading articles...</div>;
-  if (error) return <div className="error-message">Error: {error}</div>;
+  if (error) return <ErrorPage err={error} />;
 
   return (
     <section className="article-list">
