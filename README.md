@@ -1,9 +1,8 @@
 # Northcoders News - Frontend
 
-## 1. Deployed Version
+ Live Version
 
-You can access the live version of the frontend [here](https://northcoders-news-frontend.onrender.com/) (Replace this with the actual URL after deployment). This version is fully integrated with the backend API, showcasing all the platform's functionality.
-
+You can access the live version of the frontend [here]((https://kaleems-nc-news.netlify.app/)). This version is fully integrated with the backend API, showcasing all the platform's functionality.
 
 ## 2. Project Overview
 
@@ -29,7 +28,7 @@ The live version of the **Northcoders News API** is hosted [here](https://nc-new
 This project requires **Node.js v22.9.0** or higher. You can check your current Node.js version by running:
 
 ```bash
-node --version
+node -v
 ```
 
 ## 5. Running the Project Locally
@@ -37,13 +36,7 @@ node --version
 ### 5.1 Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/northcoders-news-frontend.git
-```
-
-### 5.2 Navigate into the Project Directory
-
-```bash
-cd northcoders-news-frontend
+git clone https://github.com/kaleemashraf21/nc-news
 ```
 
 ### 5.3 Install Dependencies
@@ -51,6 +44,7 @@ cd northcoders-news-frontend
 ```bash
 npm install
 ```
+
 ### 5.4 Start the App Locally
 
 ```bash
