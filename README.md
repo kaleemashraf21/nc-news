@@ -1,6 +1,6 @@
 # Northcoders News - Frontend
 
- Live Version
+## 1. Live Version
 
 You can access the live version of the frontend [here]((https://kaleems-nc-news.netlify.app/)). This version is fully integrated with the backend API, showcasing all the platform's functionality.
 
@@ -13,7 +13,7 @@ You can access the live version of the frontend [here]((https://kaleems-nc-news.
 - **Post and delete comments** on articles.
 - **Vote on articles** (upvote or downvote).
 - **Filter articles by topic**.
-- **Sort articles** based on various criteria (e.g., date, votes).
+- **Sort articles** based on various criteria (e.g., date, topic).
 
 The frontend connects seamlessly to the backend API, providing an interactive and dynamic experience for the user.
 
