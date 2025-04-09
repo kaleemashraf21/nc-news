@@ -2,7 +2,7 @@
 
 ## 1. Live Version
 
-You can access the live version of the frontend [here]((https://kaleems-nc-news.netlify.app/)). This version is fully integrated with the backend API, showcasing all the platform's functionality.
+You can access the live version of the frontend [here]((https://kaleems-nc-news.netlify.app)). This version is fully integrated with the backend API, showcasing all the platform's functionality.
 
 ## 2. Project Overview
 
@@ -21,7 +21,7 @@ The frontend connects seamlessly to the backend API, providing an interactive an
 
 The **Northcoders News API** that powers this frontend application can be found in the backend repository [here](https://github.com/kaleemashraf21/nc-newsAPI).
 
-The live version of the **Northcoders News API** is hosted [here](https://nc-newsapi.onrender.com).
+The live version of the **Northcoders News API** is hosted [here](https://nc-newsapi.onrender.com/api).
 
 ## 4. Minimum Node Version
 
